@@ -1,3 +1,17 @@
+const showUsers = () => {
+    const sidebar =document.querySelector('#sidebar')
+    if(sidebar.style.transform === 'translateX(-230px)'){
+        sidebar.style.transform = 'translateX(0px)'
+        sidebar.style.display = 'block'
+        sidebar.style.height = '100vh'
+        sidebar.style.overflowY = 'scroll'
+    }else{
+        sidebar.style.transform = 'translateX(-230px)'
+        sidebar.style.display = 'none'
+
+    }
+}
+
 const socket = io()
 
 //Elements
@@ -45,8 +59,14 @@ const autoScroll = () => {
 
     console.log(visibleHeight)
     console.log(contentHeight)
+    console.log(newMessageHeight)
+    console.log(contentHeight - newMessageHeight)
     console.log(scrollOffset)
 
+}
+const pageScroll = () => {
+    window.scrollBy(0,1);
+    scrolldelay = setTimeout(pageScroll,100);
 }
 
 socket.on('message', (newMessage) => {
@@ -57,6 +77,8 @@ socket.on('message', (newMessage) => {
     })
     messages.insertAdjacentHTML("beforeend", messageRendered)
     autoScroll()
+    pageScroll()
+
 })
 
 socket.on('locationMessage', (location) => {
@@ -67,6 +89,7 @@ socket.on('locationMessage', (location) => {
     })
     messages.insertAdjacentHTML('beforeend', locationRendered)
     autoScroll()
+    pageScroll()
 })
 
 socket.on('roomData', ({room, users}) => {
