@@ -64,10 +64,7 @@ const autoScroll = () => {
     console.log(scrollOffset)
 
 }
-const pageScroll = () => {
-    window.scrollBy(0,1);
-    scrolldelay = setTimeout(pageScroll,100);
-}
+
 
 socket.on('message', (newMessage) => {
     const messageRendered =  Mustache.render(messageTemplate, {
@@ -77,7 +74,6 @@ socket.on('message', (newMessage) => {
     })
     messages.insertAdjacentHTML("beforeend", messageRendered)
     autoScroll()
-    pageScroll()
 
 })
 
@@ -89,7 +85,6 @@ socket.on('locationMessage', (location) => {
     })
     messages.insertAdjacentHTML('beforeend', locationRendered)
     autoScroll()
-    pageScroll()
 })
 
 socket.on('roomData', ({room, users}) => {
